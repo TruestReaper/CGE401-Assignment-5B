@@ -16,7 +16,8 @@ using UnityEngine.SceneManagement;
 public class FinishLineTriggerZone : MonoBehaviour
 {
     public Text winText;             // UI Text component for displaying the win message
-    private bool hasWon = false;     // Flag to check if the player has won
+    public bool hasWon = false;     // Flag to check if the player has won
+    public static FinishLineTriggerZone instance;
 
     // Start is called before the first frame update
     private void Start()
@@ -33,21 +34,15 @@ public class FinishLineTriggerZone : MonoBehaviour
         // Check if the player entered the trigger zone
         if (other.CompareTag("Player") && !hasWon)
         {
-            WinGame();
+            hasWon = true;
+
+            // Display the win message
+            if (winText != null)
+            {
+                winText.text = "You Win! Press R to Play Again!";
+                winText.enabled = true;
+            }
         }
-    }
-
-    private void WinGame()
-    {
-        hasWon = true;
-
-        // Display the win message
-        if (winText != null)
-        {
-            winText.text = "You Win! Press R to Play Again!";
-            winText.enabled = true;
-        }
-
     }
 
     // Update is called once per frame
@@ -56,14 +51,9 @@ public class FinishLineTriggerZone : MonoBehaviour
         // Allow the player to restart the level if they've won and pressed "R"
         if (hasWon && Input.GetKeyDown(KeyCode.R))
         {
-            RestartLevel();
+            hasWon = false;  // Reset the win status for the next round
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
-    }
-
-    void RestartLevel()
-    {
-        // Reload the current scene to restart the level
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
 }
