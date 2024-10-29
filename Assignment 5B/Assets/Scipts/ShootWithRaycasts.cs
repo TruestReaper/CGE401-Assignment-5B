@@ -17,6 +17,7 @@ public class ShootWithRaycasts : MonoBehaviour
     public Camera cam;
     public ParticleSystem muzzleFlash;
     public float hitForce = 10f;
+    public AudioSource laserShot;
 
     // Update is called once per frame
     void Update()
@@ -30,6 +31,8 @@ public class ShootWithRaycasts : MonoBehaviour
     void Shoot()
     {
         muzzleFlash.Play();
+
+        laserShot.Play();
 
         RaycastHit hitInfo;
 

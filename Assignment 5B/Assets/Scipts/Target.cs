@@ -12,10 +12,14 @@ using UnityEngine;
 public class Target : MonoBehaviour
 {
     public float health = 50f;
+    public AudioSource hitSound, destroyedSound;
 
     public void TakeDamage(float amount)
     {
         health -= amount;
+
+        hitSound.Play();
+
         if (health <= 0)
         {
             Die();
@@ -24,18 +28,8 @@ public class Target : MonoBehaviour
 
     void Die()
     {
+        destroyedSound.Play();
+
         Destroy(gameObject);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
